@@ -48,7 +48,7 @@ urlpatterns = [
     #url(r'^'+ app_root_slash +'registry$', RegistryHomeView.as_view(), name='registry'),
 
     url(r'^'+ app_root_slash +'logout', LogOutView.as_view(), name="logout_view"),
-    url(r'openid/', include('djangooidc.urls')),
+    #url(r'openid/', include('djangooidc.urls')),
 
     url(r'site_admin', SiteAdminView.as_view(), name='site_admin'),
 ]
