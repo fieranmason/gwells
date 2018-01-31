@@ -71,9 +71,9 @@ INSTALLED_APPS = (
     'gwells',
     'crispy_forms',
     'formtools',
-    'registry',
     'bossoidc',
     'djangooidc',
+    'registries',
 )
 
 MIDDLEWARE = (
@@ -222,3 +222,5 @@ SETTINGS_EXPORT = [
     'LOGIN_URI',                   # The URI to access for authentication
     'LOGOUT_URI'                   # The URI to access for logout
 ]
+
+AUTH_USER_MODEL='gwells.User'

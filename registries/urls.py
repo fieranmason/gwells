@@ -11,13 +11,10 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 """
-from django.contrib import admin
-from django.apps import apps
+from django.conf.urls import url
 
-# Import all models
-from gwells.models import *
+from . import views
 
-# Register your models here.
-app = apps.get_app_config('gwells')
-for model_name, model in app.models.items():
-    admin.site.register(model)
+urlpatterns = [
+    url(r'^$', views.index, name='index'),
+]
