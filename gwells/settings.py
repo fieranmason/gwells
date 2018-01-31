@@ -13,7 +13,8 @@ https://docs.djangoproject.com/en/1.8/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 import logging.config
-
+from django.core.urlresolvers import reverse
+from urllib.parse import urlparse, urlunparse
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
@@ -36,8 +37,10 @@ CSRF_COOKIE_SECURE = os.getenv('CSRF_COOKIE_SECURE', 'False') == 'True'
 CSRF_COOKIE_HTTPONLY = True
 SESSION_COOKIE_HTTPONLY = True
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
+DEBUG = True
+#DEBUG = os.getenv('DJANGO_DEBUG', 'False') == 'True'
 
 # Controls availability of the data entry functionality
 ENABLE_DATA_ENTRY = os.getenv('ENABLE_DATA_ENTRY', 'False') == 'True'
@@ -50,15 +53,6 @@ ENABLE_ADDITIONAL_DOCUMENTS = os.getenv('ENABLE_ADDITIONAL_DOCUMENTS', 'False') 
 
 # Controls app context
 APP_CONTEXT_ROOT = os.getenv('APP_CONTEXT_ROOT','')
-
-# django-settings-export lets us make these variables available in the templates.
-# This eleminate the need for setting the context for each and every view.
-SETTINGS_EXPORT = [
-    'ENABLE_DATA_ENTRY',           # To temporarily disable report submissions
-    'ENABLE_GOOGLE_ANALYTICS',     # This is only enabled for production
-    'ENABLE_ADDITIONAL_DOCUMENTS', # To temporarily disable additional documents feature
-    'APP_CONTEXT_ROOT',            # This allows for moving the app around without code changes
-]
 
 ALLOWED_HOSTS = ['*']
 
@@ -80,20 +74,6 @@ INSTALLED_APPS = (
     'bossoidc',
     'djangooidc',
 )
-
-AUTHENTICATION_BACKENDS = (
-    'django.contrib.auth.backends.ModelBackend',
-    'bossoidc.backend.OpenIdConnectBackend',
-)
-
-auth_uri = "https://dev-sso.pathfinder.gov.bc.ca/auth/realms/gwells/"
-client_id = "webapp"
-public_uri = "http://localhost:8000"
-
-scope = ['openid', 'profile', 'email'] # NOTE: This is the default scope if one is not provided
-
-from bossoidc.settings import *
-configure_oidc(auth_uri, client_id, public_uri)
 
 MIDDLEWARE = (
     'django.middleware.gzip.GZipMiddleware',
@@ -202,3 +182,89 @@ LOGGING = {
         },
     }
 }
+
+#authentication configuration
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
+    #'django.contrib.auth.backends.RemoteUserBackend',
+    'bossoidc.backend.OpenIdConnectBackend',
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'oidc_auth.authentication.BearerTokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+#URI SHARED VARIABLES
+AUTH_SCHEME = os.getenv('AUTH_SCHEME')
+AUTH_NETLOC = os.getenv('AUTH_NETLOC')
+
+LOGIN_PATH = os.getenv('LOGIN_PATH')
+LOGOUT_PATH = os.getenv('LOGOUT_PATH')
+CLIENT_ID = os.getenv('CLIENT_ID')
+
+PUBLIC_SCHEME = os.getenv('PUBLIC_SCHEME')
+PUBLIC_NETLOC = os.getenv('PUBLIC_NETLOC')
+PUBLIC_HOME_PATH = os.getenv('PUBLIC_HOME_PATH')
+AUTH = "auth/"
+
+#HOME URI Setup
+#SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
+__home_uri_parts = (PUBLIC_SCHEME, PUBLIC_NETLOC, PUBLIC_HOME_PATH, '', '', '')
+
+HOME_URI = urlunparse(__home_uri_parts)
+
+#LOGIN URI Setup
+query_element1='client_id=' + CLIENT_ID
+query_element2='response_type=code'
+query_element3='redirect_uri=' + HOME_URI
+query_components = [query_element1, query_element2, query_element3]
+
+AUTH_QUERY = '&'.join(query_components)
+
+#SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
+__login_uri_parts = (AUTH_SCHEME, AUTH_NETLOC, LOGIN_PATH, '', AUTH_QUERY, '')
+LOGIN_URI = urlunparse(__login_uri_parts)
+
+#LOGOUT URI Setup
+__logout_query='redirect_uri=' + HOME_URI
+#SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
+__logout_uri_parts = (AUTH_SCHEME, AUTH_NETLOC, LOGOUT_PATH, '', __logout_query, '')
+LOGOUT_URI = urlunparse(__logout_uri_parts)
+
+#SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
+__auth_uri_parts = (AUTH_SCHEME, AUTH_NETLOC, '', '', '', '')
+AUTH_URI = urlunparse(__auth_uri_parts)
+
+#PUBLIC_URI setUp
+__public_uri_parts = (PUBLIC_SCHEME, PUBLIC_NETLOC, '', '', '', '')
+PUBLIC_URI = urlunparse(__public_uri_parts)
+
+#https://dev-sso.pathfinder.gov.bc.ca/auth/realms/gwells/
+
+#protocol/openid-connect/auth?client_id=webapp&redirect_uri=http://localhost:8000/gwells/&response_type=code
+
+#https://dev-sso.pathfinder.gov.bc.ca/auth/realms/gwells/
+
+scope = ['openid', 'profile', 'email'] # NOTE: This is the default scope if one is not provided
+
+from bossoidc.settings import *
+configure_oidc(AUTH_URI, CLIENT_ID, PUBLIC_URI)
+
+# django-settings-export lets us make these variables available in the templates.
+# This eleminate the need for setting the context for each and every view.
+SETTINGS_EXPORT = [
+    'ENABLE_DATA_ENTRY',           # To temporarily disable report submissions
+    'ENABLE_GOOGLE_ANALYTICS',     # This is only enabled for production
+    'ENABLE_ADDITIONAL_DOCUMENTS', # To temporarily disable additional documents feature
+    'APP_CONTEXT_ROOT',            # This allows for moving the app around without code changes
+    'LOGIN_URI',                   # The URI to access for authentication
+    'LOGOUT_URI'                   # The URI to access for logout
+]

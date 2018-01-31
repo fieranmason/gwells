@@ -57,8 +57,9 @@ from .HealthView import HealthView
 from .RegistryView import RegistryView
 from .SearchView import SearchView
 from .WellDetailView import WellDetailView
+from .SiteAdminView import SiteAdminView
 
 
 
 
-__all__ = ['ActivitySubmissionDetailView', 'ActivitySubmissionListView', 'ActivitySubmissionWizardView', 'FORMS', 'HealthView', 'RegistryView', 'SearchView', 'TEMPLATES', 'WellDetailView']
+__all__ = ['ActivitySubmissionDetailView', 'ActivitySubmissionListView', 'ActivitySubmissionWizardView', 'FORMS', 'HealthView', 'RegistryView', 'SearchView', 'SiteAdminView', 'TEMPLATES', 'WellDetailView']

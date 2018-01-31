@@ -19,8 +19,16 @@ from django.http import JsonResponse
 import json
 from ..forms import SearchForm
 from ..models import LandDistrict
+from django.contrib.auth.decorators import user_passes_test
+from django.template import RequestContext
+from pprint import pprint
 
 class SearchView(generic.DetailView):
+
+    def test_func(user):
+        print('user: ', user)
+
+        return True
 
     def common_well_search(request):
         """
@@ -39,7 +47,21 @@ class SearchView(generic.DetailView):
                 cls=DjangoJSONEncoder)
         return form, well_results, well_results_json
 
+    @user_passes_test(test_func)
     def well_search(request):
+        print('session: ', request.session)
+        session_keys = request.session.keys()
+
+        print('auth: ', request.auth)
+
+        from rest_framework.authtoken.models import Token
+
+        for key in request.session.keys():
+            print('session kv pair')
+            print('key => {}'.format(key))
+
+        request_context = RequestContext(request)
+        print(request_context)
         """
             Text search.
         """
