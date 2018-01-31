@@ -19,5 +19,6 @@ from gwells.models import *
 
 # Register your models here.
 app = apps.get_app_config('gwells')
+
 for model_name, model in app.models.items():
     admin.site.register(model)

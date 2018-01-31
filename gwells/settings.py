@@ -71,7 +71,6 @@ INSTALLED_APPS = (
     'gwells',
     'crispy_forms',
     'formtools',
-    'bossoidc',
     'djangooidc',
     'registries',
 )
@@ -204,8 +203,9 @@ REST_FRAMEWORK = {
     ),
 }
 
-
 urlBuilder = URLBuilder()
+
+LOGIN_URI = urlBuilder.LOGIN_URI
 
 scope = ['openid', 'profile', 'email'] # NOTE: This is the default scope if one is not provided
 
@@ -219,8 +219,7 @@ SETTINGS_EXPORT = [
     'ENABLE_GOOGLE_ANALYTICS',     # This is only enabled for production
     'ENABLE_ADDITIONAL_DOCUMENTS', # To temporarily disable additional documents feature
     'APP_CONTEXT_ROOT',            # This allows for moving the app around without code changes
-    'LOGIN_URI',                   # The URI to access for authentication
-    'LOGOUT_URI'                   # The URI to access for logout
+    'LOGIN_URI'
 ]
 
 AUTH_USER_MODEL='gwells.User'

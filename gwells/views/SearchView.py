@@ -49,13 +49,6 @@ class SearchView(generic.DetailView):
 
     @user_passes_test(test_func)
     def well_search(request):
-        print('session: ', request.session)
-        session_keys = request.session.keys()
-
-        print('auth: ', request.auth)
-
-        from rest_framework.authtoken.models import Token
-
         for key in request.session.keys():
             print('session kv pair')
             print('key => {}'.format(key))

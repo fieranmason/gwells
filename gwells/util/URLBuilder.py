@@ -18,9 +18,9 @@ class URLBuilder():
         self.CLIENT_ID = os.getenv('CLIENT_ID')
 
         self.HOME_URI = str(self.__build_home_uri())
-        #self.LOGIN_URI = str(self.__build_login_uri())
-        #self.LOGOUT_URI = str(self.__build_logout_uri())
-        #self.AUTH_URI = str(self.__build_auth_uri())
+        self.LOGIN_URI = str(self.__build_login_uri())
+        self.LOGOUT_URI = str(self.__build_logout_uri())
+        self.AUTH_URI = str(self.__build_auth_uri())
 
     def __build_home_uri(self):
         #SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
@@ -57,7 +57,5 @@ class URLBuilder():
         return self.__build_uri('public_uri', parts)
 
     def __build_uri(self, name, parts):
-        print('parts: ', parts)
         uri = urlunparse(parts)
-        print('name: ', name, ' uri: ',  uri)
         return uri
