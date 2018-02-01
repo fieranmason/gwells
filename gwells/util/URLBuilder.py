@@ -58,4 +58,5 @@ class URLBuilder():
 
     def __build_uri(self, name, parts):
         uri = urlunparse(parts)
+        print(name, ': ', uri)
         return uri

@@ -87,7 +87,7 @@ MIDDLEWARE = (
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
-    'gwells.middleware.AuthenticationMiddlewareJWT',
+    'gwells.middleware.GWellsMiddleware',
 )
 
 ROOT_URLCONF = 'gwells.urls'

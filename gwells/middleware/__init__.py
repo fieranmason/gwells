@@ -1,1 +1,1 @@
-from .AuthenticationMiddlewareJWT import AuthenticationMiddlewareJWT
+from .GWellsMiddleware import GWellsMiddleware
