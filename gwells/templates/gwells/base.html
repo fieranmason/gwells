@@ -162,10 +162,12 @@
                             <li><a id="navbar-submission" href="{% url 'activity_submission_create' %}">Submit Report</a></li>
                             {% endif %}
                             {% if request.user.is_authenticated %}
-                            <li><a href="{% url 'logout_view' %}">Logout</a></li>
+
                             {% else %}
-                            <li><a href="{{settings.LOGIN_URI}}">Log in</a></li>
+
                             {% endif %}
+                            <li><a href="{% url 'logout_view' %}">Logout</a></li>
+                            <li><a href="{{settings.LOGIN_URI}}">Log in</a></li>
                             <li><a href="{% url 'site_admin' %}">ADMIN</a></li>
                         </ul>
                         </ul>
