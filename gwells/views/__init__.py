@@ -58,8 +58,7 @@ from .RegistryView import RegistryView
 from .SearchView import SearchView
 from .WellDetailView import WellDetailView
 from .SiteAdminView import SiteAdminView
+from .LogInView import LogInView
+from .LogOutView import LogOutView
 
-
-
-
-__all__ = ['ActivitySubmissionDetailView', 'ActivitySubmissionListView', 'ActivitySubmissionWizardView', 'FORMS', 'HealthView', 'RegistryView', 'SearchView', 'SiteAdminView', 'TEMPLATES', 'WellDetailView']
+__all__ = ['ActivitySubmissionDetailView', 'ActivitySubmissionListView', 'ActivitySubmissionWizardView', 'FORMS', 'HealthView', 'LogInView', 'LogOutView', 'RegistryView', 'SearchView', 'SiteAdminView', 'TEMPLATES', 'WellDetailView']
