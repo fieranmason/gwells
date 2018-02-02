@@ -14,14 +14,15 @@ class URLBuilder():
         self.__PUBLIC_NETLOC = os.getenv('PUBLIC_NETLOC')
         self.__PUBLIC_HOME_PATH = os.getenv('PUBLIC_HOME_PATH')
         self.__AUTH_REALMS_GWELLS = os.getenv('AUTH_REALMS_GWELLS')
-
+        self.__APP_CONTEXT_ROOT = os.getenv('APP_CONTEXT_ROOT')
         self.CLIENT_ID = os.getenv('CLIENT_ID')
 
         self.HOME_URI = str(self.__build_home_uri())
+        self.PUBLIC_URI = str(self.__build_public_uri())
         self.LOGIN_URI = str(self.__build_login_uri())
         self.LOGOUT_URI = str(self.__build_logout_uri())
         self.AUTH_URI = str(self.__build_auth_uri())
-        self.PUBLIC_URI = str(self.__build_public_uri())
+
     def __build_home_uri(self):
         #SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
         parts = (self.__PUBLIC_SCHEME, self.__PUBLIC_NETLOC, self.__PUBLIC_HOME_PATH, '', '', '')
@@ -30,7 +31,7 @@ class URLBuilder():
     def __build_login_uri(self):
         query_element1='client_id=' + self.CLIENT_ID
         query_element2='response_type=code'
-        query_element3='redirect_uri=' + self.HOME_URI
+        query_element3='redirect_uri=' + self.PUBLIC_URI + '/' + self.__APP_CONTEXT_ROOT + '/login'
         query_components = [query_element1, query_element2, query_element3]
 
         auth_query = '&'.join(query_components)
