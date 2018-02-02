@@ -15,7 +15,6 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from . import views
-from gwells.views.LogOutView import LogOutView
 from .views import *
 from .views_test import *
 from registry.views import RegistryHomeView
@@ -44,6 +43,7 @@ urlpatterns = [
     url(r'^'+ app_root_slash +'500.html$', TestErrorsView.test_500_view, name='test_500'),
     url(r'^'+ app_root_slash +'404.html$', TestErrorsView.test_404_view, name='test_404'),
     url(r'^'+ app_root_slash +'logout', LogOutView.as_view(), name="logout_view"),
+    url(r'^'+ app_root_slash +'login', LogInView.as_view(), name="login_view"),
     url(r'site_admin', SiteAdminView.as_view(), name='site_admin'),
     url(r'^'+ app_root_slash +'registries/', include('registries.urls')),
     url(r'openid/', include('djangooidc.urls')),
