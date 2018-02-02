@@ -36,19 +36,19 @@ class URLBuilder():
         auth_query = '&'.join(query_components)
 
         #SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
-        parts = (self.__AUTH_SCHEME, self.__AUTH_NETLOC, self.__LOGIN_PATH, '', auth_query, '')
+        parts = (self.__AUTH_SCHEME, self.__AUTH_NETLOC, self.__AUTH_REALMS_GWELLS + self.__LOGIN_PATH, '', auth_query, '')
         return self.__build_uri('login_uri', parts)
 
     def __build_logout_uri(self):
         logout_query='redirect_uri=' + self.HOME_URI
 
         #SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
-        parts = (self.__AUTH_SCHEME, self.__AUTH_NETLOC, self.__LOGOUT_PATH, '', logout_query, '')
+        parts = (self.__AUTH_SCHEME, self.__AUTH_NETLOC, self.__AUTH_REALMS_GWELLS + self.__LOGOUT_PATH, '', logout_query, '')
         return self.__build_uri('logout_uri', parts)
 
     def __build_auth_uri(self):
         #SCHEME, NETLOG, PATH, PARAMS, QUERY, FRAMGMENT
-        parts = (self.__AUTH_SCHEME, self.__AUTH_NETLOC + '/' + self.__AUTH_REALMS_GWELLS, '', '', '', '')
+        parts = (self.__AUTH_SCHEME, self.__AUTH_NETLOC, self.__AUTH_REALMS_GWELLS, '', '', '')
         return self.__build_uri('auth_uri', parts)
 
     def __build_public_uri(self):
