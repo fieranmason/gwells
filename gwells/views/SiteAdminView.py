@@ -16,24 +16,24 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.mixins import UserPassesTestMixin
 from django.contrib.auth.models import Group
+from django.core.exceptions import ObjectDoesNotExist
 
 class SiteAdminView(LoginRequiredMixin, UserPassesTestMixin, generic.TemplateView):
     template_name = 'gwells/site_admin.html'
     raise_exception = True
 
     def test_func(self):
-
-        print(self.request.user)
+        print('SiteAdminView test_func')
+        print('User: ', self.request.user)
         groups = list(self.request.user.groups.all())
 
-        print(groups)
+        print(self.request.user, ' is a member of these groups: ', groups)
 
-        for group in groups:
-            print(group)
-
-        app_admin = Group.objects.get(name='APP_ADMIN')
-
-        print('IN GROUP? : ', app_admin in groups )
+        try:
+            app_admin = Group.objects.get(name='APP_ADMIN')
+            print('IN GROUP? : ', app_admin in groups )
+        except ObjectDoesNotExist:
+            raise ObjectDoesNotExist('The APP_ADMIN role is not configured')
         return app_admin in groups
 
     def get_context_data(self, **kwargs):

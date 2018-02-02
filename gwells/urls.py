@@ -44,7 +44,7 @@ urlpatterns = [
     url(r'^'+ app_root_slash +'404.html$', TestErrorsView.test_404_view, name='test_404'),
     url(r'^'+ app_root_slash +'logout', LogOutView.as_view(), name="logout_view"),
     url(r'^'+ app_root_slash +'login', LogInView.as_view(), name="login_view"),
-    url(r'site_admin', SiteAdminView.as_view(), name='site_admin'),
+    url(r'^'+ app_root_slash + 'site_admin', SiteAdminView.as_view(), name='site_admin'),
     url(r'^'+ app_root_slash +'registries/', include('registries.urls')),
     url(r'openid/', include('djangooidc.urls')),
 ]
