@@ -10,7 +10,4 @@ class GWellsMiddleware(object):
 
     def __call__(self, request):
         print("GWellsMiddleware __call__ function");
-
-        print(request)
-        print(request.user)
         return self.get_response(request)
