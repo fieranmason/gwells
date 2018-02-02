@@ -213,13 +213,6 @@ urlBuilder = URLBuilder()
 
 LOGIN_URI = urlBuilder.LOGIN_URI
 
-
-#auth_uri = "https://dev-sso.pathfinder.gov.bc.ca/auth/realms/gwells/"
-#client_id = "webapp" # Client ID configured in the Auth Server
-#public_uri = "http://localhost" # The address that the client will be redirected back to
-                                     # NOTE: the public uri needs to be configured in the Auth Server
-                                     #       as a valid uri to redirect to
-
 scope = ['openid', 'profile', 'email'] # NOTE: This is the default scope if one is not provided
 
 from bossoidc.settings import *
