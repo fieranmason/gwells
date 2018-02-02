@@ -21,7 +21,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 #LoginRequiredMixin
 
-class ActivitySubmissionWizardView( SessionWizardView):#TODO: remove mixin when submission goes live - this is here to demonstrate how to restrict views
+class ActivitySubmissionWizardView(LoginRequiredMixin, SessionWizardView):#TODO: remove mixin when submission goes live - this is here to demonstrate how to restrict views
     instance = None
 
     def get_context_data(self, **kwargs):

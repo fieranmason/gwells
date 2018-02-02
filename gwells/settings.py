@@ -71,9 +71,16 @@ INSTALLED_APPS = (
     'gwells',
     'crispy_forms',
     'formtools',
-    'djangooidc',
     'registries',
+    'bossoidc',
+    'djangooidc',
 )
+
+MIGRATION_MODULES = {
+    'gwells': 'gwells.migrations.gwells',
+    'registries': 'gwells.migrations.registries',
+    'bossoidc': 'gwells.migrations.bossoidc',
+}
 
 MIDDLEWARE = (
     'django.middleware.gzip.GZipMiddleware',
@@ -187,7 +194,6 @@ LOGGING = {
 #authentication configuration
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
-    #'django.contrib.auth.backends.RemoteUserBackend',
     'bossoidc.backend.OpenIdConnectBackend',
 )
 
@@ -207,10 +213,17 @@ urlBuilder = URLBuilder()
 
 LOGIN_URI = urlBuilder.LOGIN_URI
 
+
+#auth_uri = "https://dev-sso.pathfinder.gov.bc.ca/auth/realms/gwells/"
+#client_id = "webapp" # Client ID configured in the Auth Server
+#public_uri = "http://localhost" # The address that the client will be redirected back to
+                                     # NOTE: the public uri needs to be configured in the Auth Server
+                                     #       as a valid uri to redirect to
+
 scope = ['openid', 'profile', 'email'] # NOTE: This is the default scope if one is not provided
 
-#from bossoidc.settings import *
-#configure_oidc(urlBuilder.AUTH_URI, urlBuilder.CLIENT_ID, urlBuilder.PUBLIC_URI)
+from bossoidc.settings import *
+configure_oidc(urlBuilder.AUTH_URI, urlBuilder.CLIENT_ID, urlBuilder.PUBLIC_URI)
 
 # django-settings-export lets us make these variables available in the templates.
 # This eleminate the need for setting the context for each and every view.
