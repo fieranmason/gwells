@@ -15,10 +15,17 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from . import views
-from gwells.views import *
-from gwells.views.admin import *
-from .views_test import *
-from registry.views import RegistryHomeView
+from gwells.views.SearchView import SearchView
+from gwells.views.WellDetailView import WellDetailView
+from gwells.views.RegistryView import RegistryView
+from gwells.views.ActivitySubmissionDetailView import ActivitySubmissionDetailView
+from gwells.views.ActivitySubmissionListView import ActivitySubmissionListView
+from gwells.views.ActivitySubmissionWizardView import ActivitySubmissionWizardView
+from gwells.views.HealthView import HealthView
+from gwells.views.LogOutView import LogOutView
+from gwells.views.LogInView import LogInView
+from gwells.views.admin.SiteAdminView import SiteAdminView
+from gwells.views.admin.SurveyView import SurveyView
 from django.views.generic import TemplateView
 
 # Creating 2 versions of the app_root. One without and one with trailing slash
@@ -41,11 +48,12 @@ urlpatterns = [
     url(r'^'+ app_root_slash +'health$', HealthView.health, name='health'),
     url(r'^'+ app_root_slash +'groundwater-information', TemplateView.as_view(template_name='gwells/groundwater_information.html'), name='groundwater_information'),
     url(r'^'+ app_root_slash +'ajax/map_well_search/$', SearchView.map_well_search, name='map_well_search'),
-    url(r'^'+ app_root_slash +'500.html$', TestErrorsView.test_500_view, name='test_500'),
-    url(r'^'+ app_root_slash +'404.html$', TestErrorsView.test_404_view, name='test_404'),
     url(r'^'+ app_root_slash +'logout', LogOutView.as_view(), name="logout_view"),
     url(r'^'+ app_root_slash +'login', LogInView.as_view(), name="login_view"),
-    url(r'^'+ app_root_slash + 'site_admin', SiteAdminView.as_view(), name='site_admin'),
+
+    url(r'^'+ app_root_slash +'site_admin', SiteAdminView.as_view(), name='site_admin'),
+    #url(r'^'+ app_root_slash +'site_admin' + '/' + 'survey', SurveyView.as_view(), name='survey_view'),
+
     url(r'^'+ app_root_slash +'registries/', include('registries.urls')),
     url(r'openid/', include('djangooidc.urls')),
 ]
