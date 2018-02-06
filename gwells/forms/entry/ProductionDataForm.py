@@ -17,34 +17,40 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Div, Submit, Hidden, HTML, Field
 from crispy_forms.bootstrap import FormActions, AppendedText, InlineRadios
 from django.forms.models import inlineformset_factory
-from ..models import *
+from gwells.models import *
 
-
-class ActivitySubmissionCommentForm(forms.ModelForm):
+class ProductionDataForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.disable_csrf = True
         self.helper.layout = Layout(
             Fieldset(
-                'General Comments',
+                'Well Yield Estimation',
                 Div(
-                    Div('comments', css_class='col-md-12'),
+                    Div('yield_estimation_method', css_class='col-md-3'),
                     css_class='row',
                 ),
                 Div(
-                    Div('alternative_specs_submitted', css_class='col-md-12'),
+                    Div(AppendedText('yield_estimation_rate', 'USgpm'), css_class='col-md-3'),
+                    Div(AppendedText('yield_estimation_duration', 'hrs'), css_class='col-md-3'),
                     css_class='row',
                 ),
                 Div(
-                    Div(HTML('<p style="font-style: italic;">Declaration: By submitting this well construction, alteration or decommission report, as the case may be, I declare that it has been done in accordance with the requirements of the Water Sustainability Act and the Groundwater Protection Regulation.</p>'), css_class='col-md-12'),
+                    Div(AppendedText('static_level', 'ft (btoc)'), css_class='col-md-3'),
+                    Div(AppendedText('drawdown', 'ft (btoc)'), css_class='col-md-3'),
+                    css_class='row',
+                ),
+                Div(
+                    Div(InlineRadios('hydro_fracturing_performed'), css_class='col-md-3'),
+                    Div(AppendedText('hydro_fracturing_yield_increase', 'USgpm'), css_class='col-md-3'),
                     css_class='row',
                 ),
             )
         )
-        super(ActivitySubmissionCommentForm, self).__init__(*args, **kwargs)
+        super(ProductionDataForm, self).__init__(*args, **kwargs)
 
     class Meta:
-        model = ActivitySubmission
-        fields = ['comments', 'alternative_specs_submitted']
-        widgets = {'comments': forms.Textarea}
+        model = ProductionData
+        fields = ['yield_estimation_method', 'yield_estimation_rate', 'yield_estimation_duration', 'static_level', 'drawdown', 'hydro_fracturing_performed', 'hydro_fracturing_yield_increase']
+        widgets = {'hydro_fracturing_performed': forms.RadioSelect}

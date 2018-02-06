@@ -18,7 +18,7 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Div, Submit, Hidden, HTML, Field
 from crispy_forms.bootstrap import FormActions, AppendedText, InlineRadios
 from django.forms.models import inlineformset_factory
-from ..search import Search
+from gwells.search import Search
 
 class SearchForm(forms.Form):
     well = forms.IntegerField(

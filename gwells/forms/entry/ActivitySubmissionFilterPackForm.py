@@ -17,40 +17,36 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Div, Submit, Hidden, HTML, Field
 from crispy_forms.bootstrap import FormActions, AppendedText, InlineRadios
 from django.forms.models import inlineformset_factory
-from ..models import *
+from gwells.models import *
 
-class ProductionDataForm(forms.ModelForm):
+class ActivitySubmissionFilterPackForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.disable_csrf = True
         self.helper.layout = Layout(
             Fieldset(
-                'Well Yield Estimation',
+                'Filter Pack',
                 Div(
-                    Div('yield_estimation_method', css_class='col-md-3'),
+                    Div(AppendedText('filter_pack_from', 'ft'), css_class='col-md-2'),
+                    Div(AppendedText('filter_pack_to', 'ft'), css_class='col-md-2'),
+                    Div(AppendedText('filter_pack_thickness', 'in'), css_class='col-md-2'),
                     css_class='row',
                 ),
                 Div(
-                    Div(AppendedText('yield_estimation_rate', 'USgpm'), css_class='col-md-3'),
-                    Div(AppendedText('yield_estimation_duration', 'hrs'), css_class='col-md-3'),
-                    css_class='row',
-                ),
-                Div(
-                    Div(AppendedText('static_level', 'ft (btoc)'), css_class='col-md-3'),
-                    Div(AppendedText('drawdown', 'ft (btoc)'), css_class='col-md-3'),
-                    css_class='row',
-                ),
-                Div(
-                    Div(InlineRadios('hydro_fracturing_performed'), css_class='col-md-3'),
-                    Div(AppendedText('hydro_fracturing_yield_increase', 'USgpm'), css_class='col-md-3'),
+                    Div('filter_pack_material', css_class='col-md-3'),
+                    Div('filter_pack_material_size', css_class='col-md-3'),
                     css_class='row',
                 ),
             )
         )
-        super(ProductionDataForm, self).__init__(*args, **kwargs)
+        super(ActivitySubmissionFilterPackForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super(ActivitySubmissionFilterPackForm, self).clean()
+
+        return cleaned_data
 
     class Meta:
-        model = ProductionData
-        fields = ['yield_estimation_method', 'yield_estimation_rate', 'yield_estimation_duration', 'static_level', 'drawdown', 'hydro_fracturing_performed', 'hydro_fracturing_yield_increase']
-        widgets = {'hydro_fracturing_performed': forms.RadioSelect}
+        model = ActivitySubmission
+        fields = ['filter_pack_from', 'filter_pack_to', 'filter_pack_thickness', 'filter_pack_material', 'filter_pack_material_size']

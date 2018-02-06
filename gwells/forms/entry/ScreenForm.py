@@ -17,10 +17,9 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Div, Submit, Hidden, HTML, Field
 from crispy_forms.bootstrap import FormActions, AppendedText, InlineRadios
 from django.forms.models import inlineformset_factory
-from ..models import *
-from datetime import date
+from gwells.models import *
 
-class LinerPerforationForm(forms.ModelForm):
+class ScreenForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_tag = False
@@ -30,24 +29,33 @@ class LinerPerforationForm(forms.ModelForm):
         self.helper.render_hidden_fields = True
         self.helper.layout = Layout(
             HTML('<tr valign="top">'),
-            HTML('<td>'),
-            'liner_perforation_from',
+            HTML('<td width="60">'),
+            'screen_from',
             HTML('</td>'),
-            HTML('<td>'),
-            'liner_perforation_to',
+            HTML('<td width="60">'),
+            'screen_to',
+            HTML('</td>'),
+            HTML('<td width="70">'),
+            'internal_diameter',
+            HTML('</td>'),
+            HTML('<td width="200">'),
+            'assembly_type',
+            HTML('</td>'),
+            HTML('<td width="60">'),
+            'slot_size',
             HTML('</td><td width="75">&nbsp;{% if form.instance.pk %}{{ form.DELETE }}{% endif %}</td>'),
             HTML('</tr>'),
         )
-        super(LinerPerforationForm, self).__init__(*args, **kwargs)
+        super(ScreenForm, self).__init__(*args, **kwargs)
 
     def clean(self):
-        cleaned_data = super(LinerPerforationForm, self).clean()
+        cleaned_data = super(ScreenForm, self).clean()
 
-        liner_perforation_from = cleaned_data.get('liner_perforation_from')
-        liner_perforation_to = cleaned_data.get('liner_perforation_to')
+        screen_from = cleaned_data.get('screen_from')
+        screen_to = cleaned_data.get('screen_to')
         errors = []
 
-        if liner_perforation_from and liner_perforation_to and liner_perforation_to < liner_perforation_from:
+        if screen_from and screen_to and screen_to < screen_from:
             errors.append('To must be greater than or equal to From.')
 
         if len(errors) > 0:
@@ -56,5 +64,5 @@ class LinerPerforationForm(forms.ModelForm):
         return cleaned_data
 
     class Meta:
-        model = LinerPerforation
-        fields = ['liner_perforation_from', 'liner_perforation_to']
+        model = Screen
+        fields = ['screen_from', 'screen_to', 'internal_diameter', 'assembly_type', 'slot_size']

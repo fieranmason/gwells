@@ -15,7 +15,8 @@ from django.conf import settings
 from django.conf.urls import include, url
 from django.contrib import admin
 from . import views
-from .views import *
+from gwells.views import *
+from gwells.views.admin import *
 from .views_test import *
 from registry.views import RegistryHomeView
 from django.views.generic import TemplateView

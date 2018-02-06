@@ -17,8 +17,8 @@ from django.core.serializers.json import DjangoJSONEncoder
 from django.shortcuts import render
 from django.http import JsonResponse
 import json
-from ..forms import SearchForm
-from ..models import LandDistrict
+from gwells.forms.search.SearchForm import SearchForm
+from gwells.models import LandDistrict
 from django.contrib.auth.decorators import user_passes_test
 from django.template import RequestContext
 from pprint import pprint

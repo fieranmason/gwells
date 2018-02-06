@@ -17,34 +17,34 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Div, Submit, Hidden, HTML, Field
 from crispy_forms.bootstrap import FormActions, AppendedText, InlineRadios
 from django.forms.models import inlineformset_factory
-from ..models import *
+from gwells.models import *
 
-class ActivitySubmissionWaterQualityForm(forms.ModelForm):
+
+class ActivitySubmissionCommentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.disable_csrf = True
         self.helper.layout = Layout(
             Fieldset(
-                'Water Quality',
+                'General Comments',
                 Div(
-                    Div('water_quality_characteristics', css_class='col-md-3'),
+                    Div('comments', css_class='col-md-12'),
                     css_class='row',
                 ),
                 Div(
-                    Div('water_quality_colour', css_class='col-md-3'),
+                    Div('alternative_specs_submitted', css_class='col-md-12'),
                     css_class='row',
                 ),
                 Div(
-                    Div('water_quality_odour', css_class='col-md-3'),
+                    Div(HTML('<p style="font-style: italic;">Declaration: By submitting this well construction, alteration or decommission report, as the case may be, I declare that it has been done in accordance with the requirements of the Water Sustainability Act and the Groundwater Protection Regulation.</p>'), css_class='col-md-12'),
                     css_class='row',
                 ),
             )
         )
-
-        super(ActivitySubmissionWaterQualityForm, self).__init__(*args, **kwargs)
+        super(ActivitySubmissionCommentForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = ActivitySubmission
-        fields = ['water_quality_characteristics', 'water_quality_colour', 'water_quality_odour']
-        widgets = {'water_quality_characteristics': forms.CheckboxSelectMultiple}
+        fields = ['comments', 'alternative_specs_submitted']
+        widgets = {'comments': forms.Textarea}

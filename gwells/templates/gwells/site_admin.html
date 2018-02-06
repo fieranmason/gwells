@@ -6,15 +6,17 @@
 {% endblock %}
 
 {% block body_block %}
-SITE ADMIN PAGE<br>
+  SITE ADMIN PAGE<br>
 
-WELCOME<br>
-{{request.user}}<br>
+  WELCOME<br>
+  {{request.user}}<br>
 
-ROLES<br>
-<ul>
-{% for group in request.user.groups.all %}
-<li>{{group}}</li>
-{% endfor %}
+  ROLES<br>
+  <ul>
+  {% for group in request.user.groups.all %}
+    <li>{{group}}</li>
+  {% endfor %}
+  </ul>
 
+  
 {% endblock %}

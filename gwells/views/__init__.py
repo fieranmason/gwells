@@ -12,7 +12,7 @@
     limitations under the License.
 """
 
-from ..forms import *
+from gwells.forms.entry import *
 
 FORMS = [('type_and_class', ActivitySubmissionTypeAndClassForm),
          ('owner', WellOwnerForm),
@@ -50,15 +50,14 @@ TEMPLATES = {'type_and_class': 'gwells/activity_submission_form.html',
              'comments': 'gwells/activity_submission_form.html',
             }
 
-from .ActivitySubmissionDetailView import ActivitySubmissionDetailView
-from .ActivitySubmissionListView import ActivitySubmissionListView
-from .ActivitySubmissionWizardView import ActivitySubmissionWizardView
-from .HealthView import HealthView
-from .RegistryView import RegistryView
-from .SearchView import SearchView
-from .WellDetailView import WellDetailView
-from .SiteAdminView import SiteAdminView
-from .LogInView import LogInView
-from .LogOutView import LogOutView
+from gwells.views.ActivitySubmissionDetailView import ActivitySubmissionDetailView
+from gwells.views.ActivitySubmissionListView import ActivitySubmissionListView
+from gwells.views.ActivitySubmissionWizardView import ActivitySubmissionWizardView
+from gwells.views.HealthView import HealthView
+from gwells.views.RegistryView import RegistryView
+from gwells.views.SearchView import SearchView
+from gwells.views.WellDetailView import WellDetailView
+from gwells.views.LogInView import LogInView
+from gwells.views.LogOutView import LogOutView
 
-__all__ = ['ActivitySubmissionDetailView', 'ActivitySubmissionListView', 'ActivitySubmissionWizardView', 'FORMS', 'HealthView', 'LogInView', 'LogOutView', 'RegistryView', 'SearchView', 'SiteAdminView', 'TEMPLATES', 'WellDetailView']
+__all__ = ['ActivitySubmissionDetailView', 'ActivitySubmissionListView', 'ActivitySubmissionWizardView', 'FORMS', 'HealthView', 'LogInView', 'LogOutView', 'RegistryView', 'SearchView', 'TEMPLATES', 'WellDetailView']

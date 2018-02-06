@@ -17,36 +17,32 @@ from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Fieldset, Div, Submit, Hidden, HTML, Field
 from crispy_forms.bootstrap import FormActions, AppendedText, InlineRadios
 from django.forms.models import inlineformset_factory
-from ..models import *
+from gwells.models import *
 
-class ActivitySubmissionFilterPackForm(forms.ModelForm):
+class ActivitySubmissionDevelopmentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         self.helper = FormHelper()
         self.helper.form_tag = False
         self.helper.disable_csrf = True
         self.helper.layout = Layout(
             Fieldset(
-                'Filter Pack',
+                'Well Development',
                 Div(
-                    Div(AppendedText('filter_pack_from', 'ft'), css_class='col-md-2'),
-                    Div(AppendedText('filter_pack_to', 'ft'), css_class='col-md-2'),
-                    Div(AppendedText('filter_pack_thickness', 'in'), css_class='col-md-2'),
+                    Div('development_method', css_class='col-md-3'),
                     css_class='row',
                 ),
                 Div(
-                    Div('filter_pack_material', css_class='col-md-3'),
-                    Div('filter_pack_material_size', css_class='col-md-3'),
+                    Div(AppendedText('development_hours', 'hrs'), css_class='col-md-3'),
+                    css_class='row',
+                ),
+                Div(
+                    Div('development_notes', css_class='col-md-6'),
                     css_class='row',
                 ),
             )
         )
-        super(ActivitySubmissionFilterPackForm, self).__init__(*args, **kwargs)
-
-    def clean(self):
-        cleaned_data = super(ActivitySubmissionFilterPackForm, self).clean()
-
-        return cleaned_data
+        super(ActivitySubmissionDevelopmentForm, self).__init__(*args, **kwargs)
 
     class Meta:
         model = ActivitySubmission
-        fields = ['filter_pack_from', 'filter_pack_to', 'filter_pack_thickness', 'filter_pack_material', 'filter_pack_material_size']
+        fields = ['development_method', 'development_hours', 'development_notes']
