@@ -74,6 +74,7 @@ INSTALLED_APPS = (
     'registries',
     'bossoidc',
     'djangooidc',
+    'django_nose',
 )
 
 MIGRATION_MODULES = {
@@ -119,6 +120,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'wsgi.application'
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
+# NOSE_ARGS = ['--with-xunit', '--with-coverage', '--cover-erase', '--cover-inclusive','--cover-xml-file coverage.xml']
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
