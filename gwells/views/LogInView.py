@@ -10,7 +10,9 @@ import urllib.request
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 
+#LoginRequiredMixin
+#LoginRequiredMixin
 class LogInView(LoginRequiredMixin, View):
 
     def get(self, request, *args, **kwargs):
-        return redirect(URLBuilder().HOME_URI) #logout of authentication server
+        return redirect(URLBuilder().HOME_URI)

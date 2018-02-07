@@ -1,7 +1,7 @@
 #from gwells.forms.admin.SurveyForm import SurveyForm
 #from django.views.generic.edit import FormView
-from django.urls import reverse
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+#from django.urls import reverse
+#from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 #class SurveyView(FormView):
 #    template_name = 'survey_form.html'
@@ -21,13 +21,13 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 #        context = super(SurveyView, self).get_context_data(**kwargs)
 #        return context
 
-class SurveyCreate(CreateView):
-    model = Survey
-    fields = ['name']
+#class SurveyCreate(CreateView):
+#    model = Survey
+#    fields = ['name']
 
-class SurveyUpdate(UpdateView):
-    model = Survey
-    fields = ['name']
+#class SurveyUpdate(UpdateView):
+#    model = Survey
+#    fields = ['name']
 
-class SuvreyDelete(DeleteView):
-    model = Survey
+#class SuvreyDelete(DeleteView):
+#    model = Survey

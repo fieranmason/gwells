@@ -25,7 +25,7 @@ from gwells.views.HealthView import HealthView
 from gwells.views.LogOutView import LogOutView
 from gwells.views.LogInView import LogInView
 from gwells.views.admin.SiteAdminView import SiteAdminView
-from gwells.views.admin.SurveyView import SurveyView
+#from gwells.views.admin.SurveyView import SurveyView
 from django.views.generic import TemplateView
 
 # Creating 2 versions of the app_root. One without and one with trailing slash

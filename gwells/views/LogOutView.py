@@ -12,5 +12,5 @@ class LogOutView(View):
 
     def get(self, request, *args, **kwargs):
         logout(request) #logout of django
-        urllib.request.urlopen("https://logon.gov.bc.ca/clp-cgi/logoff.cgi").read()
+        #urllib.request.urlopen("https://logon.gov.bc.ca/clp-cgi/logoff.cgi").read()
         return redirect(URLBuilder().LOGOUT_URI) #logout of authentication server
